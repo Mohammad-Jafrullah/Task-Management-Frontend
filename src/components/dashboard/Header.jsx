@@ -1,14 +1,16 @@
 import { useContext } from "react"
 import { GlobalContext } from "../context/Store"
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
 
     const { LOGO, user } = useContext(GlobalContext);
+    const navigate = useNavigate();
 
     return (
         <>
-            <div className="bg-gray-50 p-4 rounded-xl w-full flex items-center justify-between">
-                <img className="max-w-50" src={LOGO} alt="Sofrik Logo" />
+            <div className="bg-gray-50 border border-gray-200 p-4 rounded-xl w-full flex items-center justify-between">
+                <img onClick={() => navigate("/")} className="max-w-50 max-md:max-w-30" src={LOGO} alt="Sofrik Logo" />
                 {
                     user ?
                         <div className="flex gap-2 items-center">

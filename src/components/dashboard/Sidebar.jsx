@@ -17,7 +17,7 @@ export default function Sidebar() {
 
     return (
         <>
-            <div className="bg-gray-50 p-4 rounded-xl min-w-50 flex flex-col gap-3 max-xl:min-w-auto">
+            <div className="bg-gray-50 border border-gray-200 p-4 rounded-xl min-w-50 flex flex-col gap-3 h-full max-xl:min-w-auto max-md:fixed max-md:flex-row max-md:w-[calc(100vw-40px)] max-md:h-auto max-md:bottom-5 z-50 max-md:left-5">
                 {menuItems.map((menu, index) => {
                     const { path, icon, name } = menu;
                     return (

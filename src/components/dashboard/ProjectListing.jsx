@@ -13,10 +13,10 @@ export default function ProjectListing() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const filteredProjects = projects ? projects.filter(project => {
-        const statusMatch = selectedStatus === "All" || project.status.toLowerCase() === selectedStatus.toLowerCase();
+        const statusMatch = selectedStatus === "All" || project.status?.toLowerCase() === selectedStatus.toLowerCase();
         const searchMatch =
-            project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            project.description.toLowerCase().includes(searchTerm.toLowerCase());
+            project.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            project.description?.toLowerCase().includes(searchTerm.toLowerCase());
         return statusMatch && searchMatch;
     }) : null;
 
@@ -73,7 +73,7 @@ export default function ProjectListing() {
 
     return (
         <>
-            <div className="p-4 md:p-6 text-sm text-gray-800 max-md:p-0">
+            <div className="text-sm text-gray-800">
                 {/* Header */}
                 <div className="flex justify-between items-center mb-6 gap-3">
                     <h2 className={`${h2}`}>All Projects</h2>
