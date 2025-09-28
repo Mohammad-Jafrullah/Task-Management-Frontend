@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { GlobalContext } from "../context/Store";
 import { button, h2, h4, input, textarea } from "../common/Theme";
 import CreateTask from "./CreateTask";
+import Pagination from "../common/Pagination";
 
 export default function ProjectSummary() {
 
     const { SERVER, AUTHTOKEN } = useContext(GlobalContext);
     const projectId = useParams().projectId;
+    const [searchParams, setSearchParams] = useSearchParams();
+    const currentPage = parseInt(searchParams.get("page")) || 1;
+    const itemsPerPage = 8;
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState("All");
@@ -23,6 +27,12 @@ export default function ProjectSummary() {
             task.description?.toLowerCase().includes(searchTerm.toLowerCase());
         return statusMatch && searchMatch;
     }) : null;
+
+    const totalTasks = filteredTasks?.length || 0;
+    const paginatedTasks = filteredTasks?.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
     const StatusFilter = () => (
         <div className="relative">
@@ -129,6 +139,10 @@ export default function ProjectSummary() {
         if (projectId) getProject();
     }, [projectId])
 
+    const handlePageChange = (page) => {
+        setSearchParams({ page });
+    };
+
     return (
         <>
             <div className="text-sm text-gray-800">
@@ -158,7 +172,7 @@ export default function ProjectSummary() {
                 </div>
                 <div className="flex items-start flex-wrap gap-4">
                     {
-                        filteredTasks ? filteredTasks.length > 0 ? filteredTasks.map(task => {
+                        paginatedTasks ? paginatedTasks.length > 0 ? paginatedTasks.map(task => {
                             const { _id, projectId, title, dueDate, description, status } = task;
 
                             return (
@@ -201,6 +215,12 @@ export default function ProjectSummary() {
                     }
                     {currentProject?.status === "active" && <CreateTask projectId={projectId} />}
                 </div>
+                <Pagination
+                    totalItems={totalTasks}
+                    currentPage={currentPage}
+                    itemsPerPage={itemsPerPage}
+                    onPageChange={handlePageChange}
+                />
             </div>
         </>
     );

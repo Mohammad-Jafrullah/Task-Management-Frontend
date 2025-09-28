@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { button, h4, input, textarea } from "../common/Theme";
 import { GlobalContext } from "../context/Store";
+import LoadingButton from "../loaders/LoadingButton";
 
 export default function CreateTask({ projectId, editTask }) {
 
     const { AUTHTOKEN, SERVER } = useContext(GlobalContext);
+    const [loading, setLoading] = useState(false);
 
     const [task, setTask] = useState({
         title: "",
@@ -22,6 +24,7 @@ export default function CreateTask({ projectId, editTask }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const response = await fetch(`${SERVER}/task/create/${projectId}`, {
                 method: "POST",
@@ -41,13 +44,14 @@ export default function CreateTask({ projectId, editTask }) {
         } catch (err) {
             alert("Server error!");
             console.log(err);
+        } finally {
+            setLoading(false);
         }
     }
 
     useEffect(() => {
         if (editTask) {
             setTask(editTask);
-            console.log(editTask)
         }
     }, [editTask])
 
@@ -90,7 +94,7 @@ export default function CreateTask({ projectId, editTask }) {
                         />
                         <label className="ml-2 cursor-pointer" htmlFor="cp-done">Done</label>
                     </div>
-                    <button className={`${button}`}>{editTask ? "Update" : "Create"}</button>
+                    {loading ? <LoadingButton /> : <button className={`${button}`}>{editTask ? "Update" : "Create"}</button>}
                 </form>
             </div>
         </>

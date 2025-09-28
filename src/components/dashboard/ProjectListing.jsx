@@ -1,13 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/Store";
 import { button, h2, input } from "../common/Theme";
+import Pagination from "../common/Pagination";
 
 export default function ProjectListing() {
 
     const { projects, SERVER, AUTHTOKEN } = useContext(GlobalContext);
     const navigate = useNavigate();
-
+    const [searchParams, setSearchParams] = useSearchParams();
+    const currentPage = parseInt(searchParams.get("page")) || 1;
+    const itemsPerPage = 5;
     const [isOpen, setIsOpen] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState("All");
     const [searchTerm, setSearchTerm] = useState("");
@@ -19,6 +22,12 @@ export default function ProjectListing() {
             project.description?.toLowerCase().includes(searchTerm.toLowerCase());
         return statusMatch && searchMatch;
     }) : null;
+
+    const totalProjects = filteredProjects?.length || 0;
+    const paginatedProjects = filteredProjects?.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
     const StatusFilter = () => (
         <div className="relative">
@@ -71,6 +80,10 @@ export default function ProjectListing() {
         }
     }
 
+    const handlePageChange = (page) => {
+        setSearchParams({ page });
+    };
+
     return (
         <>
             <div className="text-sm text-gray-800">
@@ -99,8 +112,8 @@ export default function ProjectListing() {
                             <span key={i} className="w-1/4 font-[Montserrat] text-sm font-semibold text-black">{head}</span>
                         ))}
                     </div>
-                    {filteredProjects ?
-                        filteredProjects.length ? filteredProjects.reverse().map(project => {
+                    {paginatedProjects ?
+                        paginatedProjects.length ? paginatedProjects.reverse().map(project => {
                             const { _id, title, description, status, publishedDate } = project;
 
                             return (
@@ -145,6 +158,12 @@ export default function ProjectListing() {
                         ) : <p className="text-xl font-bold text-left p-4 text-gray-700">Loading...</p>
                     }
                 </div>
+                <Pagination
+                    totalItems={totalProjects}
+                    currentPage={currentPage}
+                    itemsPerPage={itemsPerPage}
+                    onPageChange={handlePageChange}
+                />
             </div>
         </>
     );

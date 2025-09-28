@@ -21,7 +21,7 @@ export default function Dashboard() {
 
     return (
         <>
-            <div className="w-[100vw] h-[100vh] p-10 flex items-start gap-5 max-md:p-5 max-md:pb-30 max-md:h-auto">
+            <div className="w-[100vw] p-10 flex items-start gap-5 max-md:p-5 max-md:pb-30 max-md:h-auto">
                 <Sidebar />
                 <div className="flex-1 flex flex-col gap-5">
                     <Header />

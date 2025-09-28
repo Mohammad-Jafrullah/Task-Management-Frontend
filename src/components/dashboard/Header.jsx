@@ -9,7 +9,7 @@ export default function Header() {
 
     return (
         <>
-            <div className="bg-gray-50 border border-gray-200 p-4 rounded-xl w-full flex items-center justify-between">
+            <div className="bg-gray-50 border border-gray-200 p-4 rounded-xl w-full flex items-center justify-between sticky top-2 z-50">
                 <img onClick={() => navigate("/")} className="max-w-50 max-md:max-w-30" src={LOGO} alt="Sofrik Logo" />
                 {
                     user ?

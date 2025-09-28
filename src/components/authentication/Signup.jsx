@@ -2,10 +2,12 @@ import { useContext, useState } from "react"
 import { GlobalContext } from "../context/Store"
 import { button, h2, input } from "../common/Theme";
 import { Link } from "react-router-dom";
+import LoadingButton from "../loaders/LoadingButton";
 
 export default function Signup() {
 
     const { LOGO, SERVER } = useContext(GlobalContext);
+    const [loading, setLoading] = useState(false);
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -22,6 +24,7 @@ export default function Signup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const response = await fetch(`${SERVER}/api/signup`, {
                 method: "POST",
@@ -41,6 +44,8 @@ export default function Signup() {
         } catch (err) {
             alert("Server error!");
             console.log(err);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -54,7 +59,7 @@ export default function Signup() {
                         <input name="name" value={user.name} type="text" className={`${input}`} placeholder="Full Name" onChange={handleUser} required />
                         <input name="email" value={user.email} type="email" className={`${input}`} placeholder="Email" onChange={handleUser} required />
                         <input name="password" value={user.password} type="password" className={`${input}`} placeholder="Create Password" onChange={handleUser} required />
-                        <button type="submit" className={`${button}`}>Signup</button>
+                        {loading ? <LoadingButton /> : <button type="submit" className={`${button}`}>Signup</button>}
                         <p className="text-sm text-center">
                             Already have an account.
                             <Link to={"/"} className="text-[#005568] font-semibold ml-2">
