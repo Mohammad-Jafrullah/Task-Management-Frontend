@@ -56,7 +56,7 @@ export default function Login() {
                     <form onSubmit={handleSubmit} className="bg-white w-full border border-gray-200 p-5 rounded-xl flex flex-col gap-4">
                         <h2 className={`${h2} text-center`}>Login</h2>
                         <input name="email" value={user.email} type="email" className={`${input}`} placeholder="Email" onChange={handleUser} required />
-                        <input name="password" value={user.password} type="password" className={`${input}`} placeholder="Create Password" onChange={handleUser} required />
+                        <input name="password" value={user.password} type="password" className={`${input}`} placeholder="Enter Password" onChange={handleUser} required />
                         {loading ? <LoadingButton /> : <button type="submit" className={`${button}`}>Login</button>}
                         <p className="text-sm text-center">
                             Don't have an account.
@@ -69,4 +69,5 @@ export default function Login() {
             </div>
         </>
     )
+
 }
