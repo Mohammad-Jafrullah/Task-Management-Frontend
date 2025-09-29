@@ -15,6 +15,11 @@ export default function CreateTask({ projectId, editTask }) {
         status: "todo"
     })
 
+    function convertToISODate(dateStr) {
+      const [day, month, year] = dateStr.split("-");
+      return `${year}-${month}-${day}`;
+    }
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setTask(prev => ({
@@ -51,7 +56,10 @@ export default function CreateTask({ projectId, editTask }) {
 
     useEffect(() => {
         if (editTask) {
-            setTask(editTask);
+            const currentTask = {
+                ...editTask, dueDate: convertToISODate(editTask.dueDate)
+            }
+            setTask(currentTask);
         }
     }, [editTask])
 
