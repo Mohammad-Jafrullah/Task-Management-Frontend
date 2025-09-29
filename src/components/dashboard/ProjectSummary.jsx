@@ -170,7 +170,7 @@ export default function ProjectSummary() {
                         className={`${input} max-w-60`}
                     />
                 </div>
-                <div className="flex items-start flex-wrap gap-4">
+                <div className="flex flex-wrap gap-4">
                     {
                         paginatedTasks ? paginatedTasks.length > 0 ? paginatedTasks.map(task => {
                             const { _id, projectId, title, dueDate, description, status } = task;
@@ -226,4 +226,5 @@ export default function ProjectSummary() {
     );
 
 };
+
 
