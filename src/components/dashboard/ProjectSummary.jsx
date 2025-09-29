@@ -172,7 +172,7 @@ export default function ProjectSummary() {
                 </div>
                 <div className="flex items-start flex-wrap gap-4">
                     {
-                        paginatedTasks ? paginatedTasks.length > 0 ? paginatedTasks.map(task => {
+                        paginatedTasks ? paginatedTasks.length > 0 ? paginatedTasks.reverse().map(task => {
                             const { _id, projectId, title, dueDate, description, status } = task;
 
                             return (
@@ -224,4 +224,5 @@ export default function ProjectSummary() {
             </div>
         </>
     );
+
 };
