@@ -56,10 +56,7 @@ export default function CreateTask({ projectId, editTask }) {
 
     useEffect(() => {
         if (editTask) {
-            const currentTask = {
-                ...editTask, dueDate: convertToISODate(editTask.dueDate)
-            }
-            setTask(currentTask);
+            setTask(editTask);
         }
     }, [editTask])
 
