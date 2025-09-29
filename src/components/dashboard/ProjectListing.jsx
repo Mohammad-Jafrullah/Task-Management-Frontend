@@ -15,7 +15,7 @@ export default function ProjectListing() {
     const [selectedStatus, setSelectedStatus] = useState("All");
     const [searchTerm, setSearchTerm] = useState("");
 
-    const filteredProjects = projects ? projects.reverse().filter(project => {
+    const filteredProjects = projects ? [...projects].reverse().filter(project => {
         const statusMatch = selectedStatus === "All" || project.status?.toLowerCase() === selectedStatus.toLowerCase();
         const searchMatch =
             project.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
