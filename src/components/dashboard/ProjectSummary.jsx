@@ -20,7 +20,7 @@ export default function ProjectSummary() {
     const [tasks, setTasks] = useState(null);
     const [isEdit, setIsEdit] = useState(null);
 
-    const filteredTasks = tasks ? tasks.filter(task => {
+    const filteredTasks = tasks ? tasks.reverse().filter(task => {
         const statusMatch = selectedStatus === "All" || task.status?.toLowerCase() === selectedStatus.toLowerCase();
         const searchMatch =
             task.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -172,7 +172,7 @@ export default function ProjectSummary() {
                 </div>
                 <div className="flex items-start flex-wrap gap-4">
                     {
-                        paginatedTasks ? paginatedTasks.length > 0 ? paginatedTasks.reverse().map(task => {
+                        paginatedTasks ? paginatedTasks.length > 0 ? paginatedTasks.map(task => {
                             const { _id, projectId, title, dueDate, description, status } = task;
 
                             return (
@@ -226,3 +226,4 @@ export default function ProjectSummary() {
     );
 
 };
+
