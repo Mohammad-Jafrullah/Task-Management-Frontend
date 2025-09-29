@@ -15,7 +15,7 @@ export default function ProjectListing() {
     const [selectedStatus, setSelectedStatus] = useState("All");
     const [searchTerm, setSearchTerm] = useState("");
 
-    const filteredProjects = projects ? projects.filter(project => {
+    const filteredProjects = projects ? projects.reverse().filter(project => {
         const statusMatch = selectedStatus === "All" || project.status?.toLowerCase() === selectedStatus.toLowerCase();
         const searchMatch =
             project.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -113,7 +113,7 @@ export default function ProjectListing() {
                         ))}
                     </div>
                     {paginatedProjects ?
-                        paginatedProjects.length ? paginatedProjects.reverse().map(project => {
+                        paginatedProjects.length ? paginatedProjects.map(project => {
                             const { _id, title, description, status, publishedDate } = project;
 
                             return (
@@ -167,4 +167,5 @@ export default function ProjectListing() {
             </div>
         </>
     );
+
 };
