@@ -84,6 +84,10 @@ export default function ProjectListing() {
         setSearchParams({ page });
     };
 
+    useEffect(() => {
+        setSearchParams({ page: 1 });
+    }, [searchTerm, selectedStatus]);
+
     return (
         <>
             <div className="text-sm text-gray-800">
